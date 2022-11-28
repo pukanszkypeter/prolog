@@ -1,2 +1,3 @@
-# prolog
- ELTE-IK (MSc) logical programming course repository.
+# Prolog
+
+ELTE-IK (MSc) logical programming course repository.

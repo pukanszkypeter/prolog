@@ -1,6 +1,8 @@
 %% -*- Mode: Prolog; coding: utf-8 -*-
 
+% Prolog config
 % :- set_prolog_flag(toplevel_print_options, [max_depth(10000)]).
+
 bool(true).
 bool(false).
 
@@ -16,11 +18,11 @@ or(false, B, B) :- bool(B).
 % h | i |   i
 % h | h |   i
 
-impl(true,false,false).
-impl(true, true, true).
+impl(true, A, A) :- bool(A).
 impl(false, A, true) :- bool(A).
 
-impl2(A,B,C) :-
+% implikáció a (vagy) függvény megfordításával
+impl_not_or(A,B,C) :-
     bool(A),
     bool(B),
     bool(C),
@@ -29,21 +31,20 @@ impl2(A,B,C) :-
 
 % ----------------------------------------
 
-% ℕ
+% ℕ - természetes számok
 nat(0).
 nat(s(X)) :- nat(X).
 
-plus3(X,s(s(s(X)))) :- nat(X).
-
-add(0,X,X) :- nat(X).
-add(s(X),Y,s(Z)) :- add(X,Y,Z).
+% számhoz adunk 3-t
+plus_3(X,s(s(s(X)))) :- nat(X).
 
 % 0 + x = x
+add(0,X,X) :- nat(X).
 % s(n) + x = s (n + x)
-
-divideBy2(A,B) :- add(B,B,A).
+add(s(X),Y,s(Z)) :- add(X,Y,Z).
 
 % x + x = 2 * x
+divideBy2(A,B) :- add(B,B,A).
 
 mulBackward(0,M,0) :- nat(M).
 mulBackward(s(N),M,X) :-
@@ -55,7 +56,7 @@ mulForward(s(N),M,X) :-
     mulForward(N,M,Y),
     add(Y,M,X).
 
-% -------------------------
+% ----------------------------------------
 
 list([]). % Üres lista
 list([_|Xs]) :- list(Xs). % Legalább egy elemű lista
